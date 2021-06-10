@@ -13,3 +13,22 @@ We finally construct a STFT spectrogram with 128 frames,
 and each frame is represented as a 513-dimensional vector.
 
 Then we will split the dataset into **10% testing**, **10% validation** and **80% training**.
+
+## Model Training
+For this project I have used parallel Bi-directional LSTM and CNN models. I have experimented many architectures and the got some good results.
+
+Final selected model configuration. 
+CNN model Configuration is given below:
+- 5 Conv2D layers.
+- 2 Dropout layers.
+- 4 MaxPooling layers.
+- BatchNOrmalization layers are also used to speed up the computation of CNN model.
+
+RNN model configuration is given below:
+- 2 MaxPooling layer to reduce the dimensinality of spectogram into (128, 128) shape.
+- 2 Bi-Directional LSTM layers
+
+**In the end those 2 models will return 256 shape output and then I will just add those two models**
+
+After combining the model I have just added one Dense layer with **10 neurons** and a **softmax function**.
+
