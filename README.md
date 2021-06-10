@@ -15,7 +15,9 @@ and each frame is represented as a 513-dimensional vector.
 Then we will split the dataset into **10% testing**, **10% validation** and **80% training**.
 
 ## Model Training
-For this project I have used parallel Bi-directional LSTM and CNN models. I have experimented many architectures and the got some good results.
+For this project I have used parallel Bi-directional LSTM and CNN models. I have experimented many architectures and got some good validation accuracy results.
+
+![Experiment Graphs](https://github.com/abdul789150/Music-Genre-Classification-using-RCNN/blob/main/images/accuracy_graph.png)
 
 Final selected model configuration. 
 CNN model Configuration is given below:
@@ -32,3 +34,19 @@ RNN model configuration is given below:
 
 After combining the model I have just added one Dense layer with **10 neurons** and a **softmax function**.
 
+## Results
+Final Model **validation accuracy: 94%** and **training accuracy: 85.7%**.
+
+![Model Result](https://github.com/abdul789150/Music-Genre-Classification-using-RCNN/blob/main/images/selected_model_graph.png)
+
+
+### Confusion Matrix
+![Confusion Matrix Result](https://github.com/abdul789150/Music-Genre-Classification-using-RCNN/blob/main/images/cm_rcnn.png)
+
+## Libraries Required to run this project:
+- numpy
+- librosa
+- scipy
+- flask
+- keras
+- tensorflow
