@@ -1,0 +1,225 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    
+    <!--====== Title ======-->
+    <title>Music Genre Classification</title>
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    <!--====== Bootstrap CSS ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    
+    <!--====== Default CSS ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}">
+    
+    <!--====== Style CSS ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!--====== Player CSS ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player_style.css') }}">
+    
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>
+
+</head>
+
+<body>
+    
+    <header class="header-area">
+        <div class="navbar-area headroom">
+            <div class="ml-5 pl-2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav class="navbar navbar-expand-lg">
+                            <a class="navbar-brand " href="">
+                                Genre Classification
+                            </a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul id="nav" class="navbar-nav ml-auto">
+                                    <li class="nav-item active">
+                                    </li>
+
+                                </ul>
+                            </div> <!-- navbar collapse -->
+                            
+                        </nav> <!-- navbar -->
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div> <!-- navbar area -->
+        
+        <div id="home" class="header-hero d-lg-flex align-items-center">
+            <div class="col-lg-12 ml-5" style="margin-top: -10%;">
+                    <div class="row">
+                        <div class="col-lg-6" style="margin-top: 10%;">
+                            <div class="header-hero-content" style="margin-top: -30%;">
+                                <h2 class="hero-title" data-wow-duration="1s" data-wow-delay="0.2s"><b>Music</b> <span>Genre</span> Classification</h2>
+                                <p class="text" data-wow-duration="1s" data-wow-delay="0.5s">
+                                    You can easily classify the genre of your favourite songs by using the website. The model behind the classification of genre gave 87% testing result, which is an indication that you 
+                                    will find good results. <br>
+                                    Just select a song and click classify to get the predictions. 
+                                </p>
+                                <div class="mt-4 d-flex">
+                                    <div>
+                                        <form id="upload-audio-form" action="" method="post" enctype="multipart/form-data">
+                                            {{csrf}}
+                                            <label for="audio-upload" class="btn btn-primary" style="cursor: pointer;">
+                                                Select audio file
+                                            </label>
+                                            <input id="audio-upload" type="file" style="display: none;"/>
+                                        </form>
+
+                                    </div>
+                                    <button id="classify-audio" class="btn main-btn ml-2" style="border-radius: .30rem; height: 38px; line-height: 20px;">Classify</button>
+                                </div>
+                                <div class="mt-4">
+                                    <h2 class="hero-title" style="font-size: 30px;"><b>Prediction</b></h2>
+                                    <div id="spin" class="mt-2">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <p class="hero-title" id="pred" style="font-size: 18px;"><b>Predicted Genre: </b><span id="pred-genre">Select a song to classify!</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Player -->
+                        <div class="col-lg-6 float-right">
+                            <div class="" style="color: white;">
+                                <section class="main">
+                                    <div id="player">
+                                        <section class="player">
+                                            <figure class="currentTrack">
+                                            <div class="currentTrackCover">
+                                            </div>
+                                            <img src="{{ url_for('static', filename='images/cover.jpeg') }}" />
+                                            </figure>
+                                            <section class="controls mt-n3">
+                                                <h4 class="title"></h4>
+                                                <div class="audio">
+                                                    <source src="{{ url_for('static', filename='images/test.mp3') }}" type="audio/mpeg">
+                                                    <div class="play-pause" style="margin-top: 0%; right: 25px; color: white;">
+                                                    <p class="play" onclick="playpauseTrack()"><i class="fa fa-play-circle fa-3x"></i></p>
+                                                    </div>
+                                                    <div class="scrubber">
+                                                    <!-- Define the section for displaying the seek slider-->
+                                                    <div class="slider_container" style="color: white;">
+                                                    <div class="current-time">00:00</div>
+                                                    <input type="range" min="1" max="100"
+                                                        value="0" class="seek_slider" onchange="seekTo()">
+                                                    <div class="total-duration">00:00</div>
+                                                    </div>
+                                    
+                                                    <!-- Define the section for displaying the volume slider-->
+                                                    <div class="slider_container" style="color: white;">
+                                                    <i class="fa fa-volume-down"></i>
+                                                    <input type="range" min="1" max="100"
+                                                        value="99" class="volume_slider" onchange="setVolume()">
+                                                    <i class="fa fa-volume-up"></i>
+                                                    </div>
+                                    
+                                                    </div>
+                                                                
+                                    
+                                                    <!-- <div class="time">
+                                                    <em class="played">00:00</em>
+                                                    <strong class="duration">02:31</strong>
+                                                    </div> -->
+                                                </div>
+                                                <div class="buttons">
+                                                </div>
+                                            </section>
+                                        </section>
+                                    </div>
+                                </section>
+                            </div>
+                    </div> <!-- row -->
+            </div>
+
+        </div> <!-- header hero -->
+    </header>
+
+
+    <!--====== Bootstrap js ======-->
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>    
+
+
+    <!--====== player script js ======-->
+    <script src="{{ url_for('static', filename='js/player_script.js') }}"></script>
+    
+    <script>
+        document.getElementById('spin').style.display = "none"
+
+        window.onload = function(){
+
+            Uploaded_file = undefined
+
+            $( "#audio-upload" ).change(function() {
+                console.log(this.files[0])
+                var form = $('#upload-audio-form')[0]; // You need to use standard javascript object here
+                console.log(form)
+                var formData = new FormData();
+                formData.append('file', this.files[0])
+                $.ajax({
+                    type: 'POST',
+                    url: '/upload',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        console.log("response is here")
+                        console.log(response)
+                        loadTrack(response)
+                        Uploaded_file = response
+
+                    }
+                })
+            });
+
+
+        
+            $("#classify-audio").click(function(){
+                console.log("Uploaded file is: ", Uploaded_file)
+                // baseURL = "{{ url_for('classify_song', filename='"+ Uploaded_file +"') }}"
+                document.getElementById('pred').style.display = "none"
+                document.getElementById('spin').style.display = "block"
+                if(Uploaded_file != undefined){
+                    $.ajax({
+                    type: 'POST',
+                    url: "/classify_song",
+                    data: {"file": Uploaded_file},
+                    success: function (response) {
+                        console.log("response is here")
+                        console.log(response)
+                        document.getElementById('spin').style.display = "none"
+                        document.getElementById('pred').style.display = "block"
+                        document.getElementById('pred-genre').innerHTML = response
+                    }
+                    
+                })
+                }
+
+            })
+        
+        }
+
+
+
+    </script>
+
+
+</body>
+
+</html>
