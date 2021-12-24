@@ -35,7 +35,7 @@ RNN model configuration is given below:
 After combining the model I have just added one Dense layer with **10 neurons** and a **softmax function**.
 
 ## Results
-Final Model **validation accuracy: 94%** and **training accuracy: 85.7%**.
+Final Model **training accuracy: 92.7%** and **validation accuracy: 85.7%**.
 
 ![Model Result](https://github.com/abdul789150/Music-Genre-Classification-using-RCNN/blob/main/images/selected_model_graph.png)
 
